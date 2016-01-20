@@ -3,7 +3,7 @@ import math
 """
 Quadrilatère quelconque utilisée pour la création des cellules
 """
-class CellularForm:
+class cForm:
     def __init__(self, points):
         self.points = points #L'ordre a de l'importance
         self.base = 0
@@ -16,7 +16,6 @@ class CellularForm:
         assert(seg0 <= 4 and seg0 >= 0)
         assert(val0 >= 0.0 and val0 <= 1.0)
         assert(val1 >= 0.0 and val1 <= 1.0)
-        print(self.base)
         seg0 = (seg0 + self.base)%4
         seg1 = (seg0 + 2)%4
 
@@ -32,17 +31,18 @@ class CellularForm:
         points0 = []
         points1 = []
 
-        points0.append(self.points[(seg1 + 1)%4])
-        points0.append(self.points[seg0])
         points0.append(pos0)
         points0.append(pos1)
+        points0.append(self.points[seg1])
+        points0.append(self.points[(seg0 + 1)%4])
 
-        points1.append(self.points[seg1])
-        points1.append(self.points[(seg0 + 1)%4])
-        points1.append(pos0)
+        points1.append(self.points[seg0])
+        points1.append(self.points[(seg1 + 1)%4])
         points1.append(pos1)
+        points1.append(pos0)
 
-        return [CellularForm(points0), CellularForm(points1)]
+
+        return [cForm(points0), cForm(points1)]
 
     #Divise la forme en 2 avec une gestion de la pente
     #@param:    seg0 -- entier -- position dans l'index de la liste de segments
@@ -85,7 +85,7 @@ class CellularForm:
         points0.append(self.points[(seg1 + 1)%4], self.points[seg0], pos0, pos1)
         points1.append(self.points[(seg0 + 1)%4], self.points[seg1], pos1, pos0)
 
-        return [CellularForm(points0), CellularForm(points1)]
+        return [cForm(points0), cForm(points1)]
 
     def draw(self, screen):
         for i in range(len(self.points)):

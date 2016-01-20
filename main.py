@@ -1,5 +1,5 @@
 from tkinter import *
-from CellularModel import CellularModel
+from Model import Model
 from Operation import Operation
 def clavier(event):
     global coords
@@ -36,7 +36,7 @@ if __name__ == "__main__" :
     operations.append(Operation("Q3", [5, 5], 0, 0.5, 0.0, 0))
     operations.append(Operation("T", [], 1, 0.5, 0.0, 0))
 
-    celMod = CellularModel(10, 10, 200, 200, operations)
+    celMod = Model(10, 10, 200, 200, operations)
     celMod.draw(canvas)
 
     canvas.pack()

@@ -1,4 +1,4 @@
-from CellularForm import CellularForm
+from cForm import cForm
 """
 Cellule pouvant être subdivisée
 """
@@ -21,9 +21,9 @@ class Cellular:
                                                                       self.actualOperation.divideVal,
                                                                         self.actualOperation.divideVal)
 
-            print(self.actualOperation.setBase)
-            cellularForm0.base = self.actualOperation.setBase
-            cellularForm1.base = self.actualOperation.setBase
+            #print(self.actualOperation.setBase)
+            #cellularForm0.base = self.actualOperation.setBase
+            #cellularForm1.base = self.actualOperation.setBase
             cellular0 = Cellular(cellularForm0,
                                  operations[self.actualOperation.result[0]],
                                  self)
