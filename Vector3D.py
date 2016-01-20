@@ -99,8 +99,8 @@ class Vector3D:
 # Operators
 #====================================================
     def getRotatedZ(self, theta):
-        return Vector3D(self.coor[0] + self.coor[0] * math.cos(theta) + self.coor[1] * math.sin(theta),
-                        self.coor[1] + self.coor[1] * math.cos(theta) - self.coor[0] * math.sin(theta),
+        return Vector3D(self.coor[0] * math.cos(theta) - self.coor[1] * math.sin(theta),
+                        self.coor[1] * math.cos(theta) + self.coor[0] * math.sin(theta),
                         self.coor[2], self.coor[3])
 
     def neg(self):
@@ -140,9 +140,9 @@ class Vector3D:
     
     def cross(self, vec3D):
         return Vector3D(self.getY()*vec3D.getZ() - self.getZ()*vec3D.getY(),
-                               self.getZ()*vec3D.getX() - self.getX()*vec3D.getZ(),
-                               self.getX()*vec3D.getY() - self.getY()*vec3D.getX(),
-                               self.getZ())
+                       self.getZ()*vec3D.getX() - self.getX()*vec3D.getZ(),
+                       self.getX()*vec3D.getY() - self.getY()*vec3D.getX(),
+                       self.getZ())
     
     def __cross__(self, vec3D):
         return self.cross(vec3D)

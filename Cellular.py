@@ -1,9 +1,12 @@
 from cForm import cForm
+
 """
 Cellule pouvant être subdivisée
 """
+
+
 class Cellular:
-    def __init__(self, cellularForm, actualOperation, parent = None, childs = None):
+    def __init__(self, cellularForm, actualOperation, parent=None, childs=None):
         self.cellularForm = cellularForm
 
         self.parent = parent
@@ -11,19 +14,19 @@ class Cellular:
 
         self.actualOperation = actualOperation
 
-    #On avance d'une opération la cellule
-    #Appel par cellularModel
+    # On avance d'une opération la cellule
+    # Appel par cellularModel
     def nextOperation(self, rootActualisation, operations):
         if len(self.actualOperation.result) == 2:
-        #Division
+            # Division
             self.childs = []
             [cellularForm0, cellularForm1] = self.cellularForm.divide(self.actualOperation.divideVert,
                                                                       self.actualOperation.divideVal,
-                                                                        self.actualOperation.divideVal)
+                                                                      self.actualOperation.divideVal)
 
-            #print(self.actualOperation.setBase)
-            #cellularForm0.base = self.actualOperation.setBase
-            #cellularForm1.base = self.actualOperation.setBase
+            # print(self.actualOperation.setBase)
+            # cellularForm0.base = self.actualOperation.setBase
+            # cellularForm1.base = self.actualOperation.setBase
             cellular0 = Cellular(cellularForm0,
                                  operations[self.actualOperation.result[0]],
                                  self)
@@ -37,10 +40,9 @@ class Cellular:
             rootActualisation.append(cellular1)
 
         elif len(self.actualOperation.result) == 1:
-        #Actualisation état
+            # Actualisation état
             self.actualOperation = operations[self.actualOperation.result[0]]
             rootActualisation.append(self)
-
 
     def draw(self, screen):
         if self.childs != None:

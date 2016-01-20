@@ -1,6 +1,8 @@
 from tkinter import *
 from Model import Model
 from Operation import Operation
+
+
 def clavier(event):
     global coords
 
@@ -20,10 +22,10 @@ def clavier(event):
     celMod.update()
     celMod.draw(canvas)
 
-if __name__ == "__main__" :
+
+if __name__ == "__main__":
     fenetre = Tk()
     canvas = Canvas(fenetre, width=800, height=800, background='white')
-
 
     canvas.focus_set()
     canvas.bind("<Key>", clavier)
@@ -41,6 +43,3 @@ if __name__ == "__main__" :
 
     canvas.pack()
     fenetre.mainloop()
-
-
-
