@@ -16,9 +16,9 @@ class cForm:
     #           val1 -- float  -- position découpe second segment
     def divide(self, seg0, val0, val1):
         assert (seg0 <= 4 and seg0 >= 0)
-        assert (val0 >= 0.0 and val0 <= 1.0)
-        assert (val1 >= 0.0 and val1 <= 1.0)
-        seg0 = (seg0 + self.base) % 4
+        assert (val0 >= 0.0 and val0 <= 1.0), val0
+        assert (val1 >= 0.0 and val1 <= 1.0), val1
+        seg0 = (self.base + seg0)%2
         seg1 = (seg0 + 2) % 4
 
         # Calcul des vecteurs des 2 segments
@@ -32,16 +32,30 @@ class cForm:
         # Création des nouvelles formes
         points0 = []
         points1 = []
+        if seg0 == 1:
+            # Horizontal
+            points0.append(self.points[0])
+            points0.append(self.points[1])
+            points0.append(pos0)
+            points0.append(pos1)
 
-        points0.append(pos0)
-        points0.append(pos1)
-        points0.append(self.points[seg1])
-        points0.append(self.points[(seg0 + 1) % 4])
+            points1.append(pos1)
+            points1.append(pos0)
+            points1.append(self.points[2])
+            points1.append(self.points[3])
 
-        points1.append(self.points[seg0])
-        points1.append(self.points[(seg1 + 1) % 4])
-        points1.append(pos1)
-        points1.append(pos0)
+
+        else:
+            # Vertical
+            points0.append(self.points[0])
+            points0.append(pos0)
+            points0.append(pos1)
+            points0.append(self.points[3])
+
+            points1.append(pos0)
+            points1.append(self.points[1])
+            points1.append(self.points[2])
+            points1.append(pos1)
 
         return [cForm(points0), cForm(points1)]
 
@@ -88,31 +102,34 @@ class cForm:
 
         return [cForm(points0), cForm(points1)]
 
+    def getMinSize(self):
+        min = -1
+        for i in range(len(self.points)):
+            vec = self.points[(i+1)%4] - self.points[i]
+            sqMagn = vec.getMagnitude()
+            if sqMagn > min:
+                min = sqMagn
+        return min
+
     def draw(self, screen):
         vec = Vector3D(100, 300, 0, 0)
+        a = 0  # 1.5
+        ps = []
         for i in range(len(self.points)):
-            a = 0  # 1.5
+            ps.append(self.points[i].getRotatedZ(a) + vec)
 
-            p0 = self.points[i].getRotatedZ(a) + vec
-            p1 = self.points[(i + 1) % 4].getRotatedZ(a) + vec
-            screen.create_line(p0.getX(),
-                               p0.getY(),
-                               p1.getX(),
-                               p1.getY())
+        for i in range(len(self.points)):
+            screen.create_line(ps[i].getX(), ps[i].getY(), ps[(i + 1)%4].getX(), ps[(i + 1)%4].getY())
 
-        vec1 = self.points[2] - self.points[0]
+    def drawFill(self, screen):
+        vec = Vector3D(100, 300, 0, 0)
+        a = 0  # 1.5
+        ps = []
+        for i in range(len(self.points)):
+            ps.append(self.points[i].getRotatedZ(a) + vec)
 
-        minX = min(self.points[2].getX(), self.points[0].getX())
-        minY = min(self.points[2].getY(), self.points[0].getY())
-        screen.create_rectangle(
-                minX + vec.getX(),
-                minY + vec.getY(),
-                abs(vec.getX()),
-                abs(vec.getY()),
-                fill='red')
-        """
-        screen.create_line(self.points[i].getX(),
-                           self.points[i].getY(),
-                           self.points[(i + 1)%4].getX(),
-                           self.points[(i + 1)%4].getY())
-        """
+        screen.create_polygon(  ps[0].getX(), ps[0].getY(),
+                                ps[1].getX(), ps[1].getY(),
+                                ps[2].getX(), ps[2].getY(),
+                                ps[3].getX(), ps[3].getY(),
+                                fill='red')

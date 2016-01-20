@@ -1,2 +1,3 @@
 class Constant(object):
-    OPERATION = []
+    SIZE_STOP = 20
+    ROT = 1.3
