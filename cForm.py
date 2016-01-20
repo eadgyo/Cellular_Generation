@@ -103,16 +103,16 @@ class cForm:
         return [cForm(points0), cForm(points1)]
 
     def getMinSize(self):
-        min = -1
-        for i in range(len(self.points)):
+        min = (self.points[1] - self.points[0]).getSqMagnitude()
+        for i in range(1, len(self.points)):
             vec = self.points[(i+1)%4] - self.points[i]
-            sqMagn = vec.getMagnitude()
-            if sqMagn > min:
+            sqMagn = vec.getSqMagnitude()
+            if sqMagn < min:
                 min = sqMagn
         return min
 
     def draw(self, screen):
-        vec = Vector3D(100, 300, 0, 0)
+        vec = Vector3D(100, 100, 0, 0)
         a = 0  # 1.5
         ps = []
         for i in range(len(self.points)):
@@ -122,7 +122,7 @@ class cForm:
             screen.create_line(ps[i].getX(), ps[i].getY(), ps[(i + 1)%4].getX(), ps[(i + 1)%4].getY())
 
     def drawFill(self, screen):
-        vec = Vector3D(100, 300, 0, 0)
+        vec = Vector3D(100, 100, 0, 0)
         a = 0  # 1.5
         ps = []
         for i in range(len(self.points)):

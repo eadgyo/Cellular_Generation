@@ -1,6 +1,7 @@
 from cForm import cForm
 from random import random
 from Constant import Constant
+from random import random
 """
 Cellule pouvant être subdivisée
 """

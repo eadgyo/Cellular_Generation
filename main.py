@@ -3,6 +3,7 @@ from Model import Model
 from Operation import Operation
 import time
 from random import random
+from Vector3D import Vector3D
 
 def clavier(event):
     global coords
@@ -31,18 +32,24 @@ if __name__ == "__main__":
     canvas.focus_set()
     canvas.bind("<Key>", clavier)
 
-    for i in range(5000):
-        a = random()
-        assert(0 <= a <= 1.0)
+    canvas.create_line(60,60, 90, 60)
     operations = []
     operations.append(Operation("Ir", [1, 2], 1, 0.7, 0.2))
     operations.append(Operation("Il", [0, 2], 0, 0.7, 0.0, 0, 1))
     operations.append(Operation("Q1", [3, 4], 0, 0.6, 0.2))
-    operations.append(Operation("Q2", [2, 2], 1, 0.5, 0.2))
-    operations.append(Operation("Q3", [5, 5], 0, 0.5, 0.2))
+    operations.append(Operation("Q2", [3, 2], 1, 0.5, 0.2))
+    operations.append(Operation("Q3", [3, 2], 0, 0.5, 0.2))
     operations.append(Operation("T", [], 1, 0.5, 0.2, 0))
 
-    celMod = Model(0, 0, 200, 200, operations)
+    points = []
+    a = 600
+    ra = 60
+    points.append(Vector3D(0 + ra*(random() - 0.5),0 + ra*(random() - 0.5)))
+    points.append(Vector3D(a + ra*(random() - 0.5),0 + ra*(random() - 0.5)))
+    points.append(Vector3D(a + ra*(random() - 0.5),a + ra*(random() - 0.5)))
+    points.append(Vector3D(0 + ra*(random() - 0.5),a + ra*(random() - 0.5)))
+
+    celMod = Model(points, operations)
     celMod.draw(canvas)
 
     canvas.pack()
