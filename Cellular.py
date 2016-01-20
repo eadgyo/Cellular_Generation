@@ -21,8 +21,9 @@ class Cellular:
                                                                       self.actualOperation.divideVal,
                                                                         self.actualOperation.divideVal)
 
-            cellularForm0.setBase = self.actualOperation.setBase
-            cellularForm1.setBase = self.actualOperation.setBase
+            print(self.actualOperation.setBase)
+            cellularForm0.base = self.actualOperation.setBase
+            cellularForm1.base = self.actualOperation.setBase
             cellular0 = Cellular(cellularForm0,
                                  operations[self.actualOperation.result[0]],
                                  self)
